@@ -75,13 +75,25 @@ public class EmployeeController {
 
 
     @DeleteMapping("/employees/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
-        employeeService.deleteEmployeeById(id);
-        return ResponseEntity.ok("Employee with ID " +id+ " has been deleted successfully.");
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id){
+      if(employeeRepository.existsById(id)){
+          employeeRepository.deleteById(id);
+          return ResponseEntity.noContent().build(); // Return 204 No content
+      } else {
+          return ResponseEntity.notFound().build();
+
+      }
+
+        }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Employee>> searchEmployeeByName(@RequestParam String name) {
+        List<Employee> employees=employeeService.searchEmployeeByName(name);
+        return ResponseEntity.ok(employees);
     }
 
-
-
+    }
     
 
-}
+

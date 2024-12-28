@@ -113,5 +113,18 @@ public class EmployeeService {
         // delete Employee
         employeeRepository.deleteById(id);
     }
+
+    public List<Employee> searchEmployeeByName(String name) {
+        return employeeRepository.findByFirstNameContainingIgnoreCase(name);
+    }
+
+    public List<Employee> searchByDepartment(String departmentName){
+        return employeeRepository.findByDepartmentNameContainingIgnoreCase(departmentName);
+    }
+
+    public List<Employee> searchByEmail(String email){
+        return employeeRepository.findByEmailContainingIgnoreCase(email);
+    }
+
 }
 
