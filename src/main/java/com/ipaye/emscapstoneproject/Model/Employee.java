@@ -1,17 +1,22 @@
 package com.ipaye.emscapstoneproject.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Optional;
 
 @Entity
 public class Employee {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -69,4 +74,7 @@ public class Employee {
     public void setDepartmentName(String departmentName) {
         this.departmentName=departmentName;
     }
+
+
+
 }

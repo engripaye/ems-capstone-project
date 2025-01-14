@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Key;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -20,9 +21,9 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public void addEmployee(Employee employee) {
+    public Employee addEmployee(Employee employee) {
 
-        employeeRepository.save(employee);
+       return employeeRepository.save(employee);
 
 
     }
@@ -36,10 +37,10 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee getEmployeeById(long id) {
-        Optional<Employee> employeeOptional = employeeRepository.findById(id);
+    public Optional<Employee> getEmployeeById(long id) {
 
-        return employeeOptional.orElseThrow(() -> new EmployeeNotFoundException("Employee with id "+id+ " not found"));
+       return Optional.ofNullable(employeeRepository.findById(id)
+               .orElseThrow(() -> new EmployeeNotFoundException("Employee with id " + id + " not found")));
     }
 
     public Employee getEmployeeByIdInvalid(Long id){

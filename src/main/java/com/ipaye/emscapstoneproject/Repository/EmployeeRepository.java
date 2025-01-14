@@ -11,5 +11,13 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 
 
+    List<Employee> findByFirstNameContainingIgnoreCase(String name);
 
+    List<Employee> findByDepartmentNameContainingIgnoreCase(String departmentName);
+
+    List<Employee> findByEmailContainingIgnoreCase(String email);
+
+    boolean existsByFirstName(String john);
+
+    long countByDepartmentName(String finance);
 }

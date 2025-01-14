@@ -64,5 +64,14 @@
             </plugin>
         </plugins>
     </build>
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/IpayeBabatunde/ems-capstone-project</url>
+        </repository>
+        <snapshotRepository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/IpayeBabatunde/ems-capstone-project</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

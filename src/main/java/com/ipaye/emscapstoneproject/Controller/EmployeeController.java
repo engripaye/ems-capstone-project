@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 public class EmployeeController {
@@ -22,8 +19,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+
 
     private List<Employee> employeeList = new ArrayList<>();
 
@@ -39,17 +35,17 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public List<Employee> getAllEmployee(){
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> employees = employeeService.getAllEmployees();
         System.out.println("Retrieved Employees: " + employees);
         return employees;
 
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(@PathVariable Long id){
-        return employeeRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build()).getBody();
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
+        return employeeService.getEmployeeById(id)
+                .map(ResponseEntity::ok) // Return 200 OK with the Employee if found
+                .orElse(ResponseEntity.notFound().build()); // Return 404 Not Found if the Employee is not found
 
     }
 
@@ -75,17 +71,10 @@ public class EmployeeController {
 
 
     @DeleteMapping("/employees/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id){
-      if(employeeRepository.existsById(id)){
-          employeeRepository.deleteById(id);
-          return ResponseEntity.noContent().build(); // Return 204 No content
-      } else {
-          return ResponseEntity.notFound().build();
-
-      }
-
-        }
-
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping("/search")
     public ResponseEntity<List<Employee>> searchEmployeeByName(@RequestParam String name) {
